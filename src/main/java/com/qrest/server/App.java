@@ -34,6 +34,7 @@ public class App implements Runnable
     private static Statement statement;
     private static String nid = "";
     private static String score = "0";
+    private int ze = 0;
     App(Socket clientSocket){
     	this.clientSocket = clientSocket;
     }
