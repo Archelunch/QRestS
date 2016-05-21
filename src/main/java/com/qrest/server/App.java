@@ -157,7 +157,7 @@ public class App implements Runnable
 			  		                	 
 			  		                	if(answer.equals(ans)){
 			  		                		pw.println("Задача решена правильно");
-			  		                		System.out.println("Good");
+			  		                		System.out.println("Good!");
 			  		                		 pw.flush();
 			  		                		try {
 			  		             			  connection = DriverManager.getConnection(URL, US, PASS);
@@ -173,7 +173,7 @@ public class App implements Runnable
 			  		                	}else{
 			  		                		pw.println("Неправильно");
 			  		                		 pw.flush();
-			  		                		 System.out.println("Bad");
+			  		                		 System.out.println("Bad!");
 			  		                	} 
 			  		                	 answer = "";
 					             			 
