@@ -35,8 +35,16 @@ public class App implements Runnable
     private static Statement statement;
     private static String nid = "";
     private static String score = "0";
+    private static String ps = "_";
+    private static String nc = "";
+    private static String pc = "";
+    private static String text = "";
+    private static String ans = "";
+    private static String tname = "";
+    private static String n1 = "";
+    private static String p1 = "";
     App(Socket clientSocket){
-    	this.clientSocket = clientSocket;
+    	this.setClientSocket(clientSocket);
     }
     
     public static void main(String[] args)  throws IOException {
@@ -71,8 +79,8 @@ public class App implements Runnable
 	        while (true) {
 	        	
 	        	 
-		        InputStream cin = clientSocket.getInputStream();
-                OutputStream cout = clientSocket.getOutputStream();
+		        InputStream cin = getClientSocket().getInputStream();
+                OutputStream cout = getClientSocket().getOutputStream();
                  
                 Scanner sc = new Scanner(cin);
                 PrintWriter pw = new PrintWriter(cout);
@@ -86,10 +94,15 @@ public class App implements Runnable
 	                		 
 	                	 }
 	                	 message = sc.nextLine();
+	                	 while(!sc.hasNextLine()){
+	                		 
+	                	 }
+	                	 ps = sc.nextLine();
+	                	 System.out.println(ps);
 	                	 try {
 	             			  connection = DriverManager.getConnection(URL, US, PASS);
 	             			 statement = connection.createStatement();
-	             			rs = statement.executeQuery("SELECT id FROM users WHERE name = '" +message+ "';");		
+	             			rs = statement.executeQuery("SELECT id FROM users WHERE name = '" +message+ "' and pass = '" + ps + "';");		
 	             			while (rs.next()) {
 	        				    
 	             				nid = rs.getString(1) + "";
@@ -97,8 +110,9 @@ public class App implements Runnable
 	         				   
 	         				 }
 	             			if(nid.equals("")){
-	             			statement.executeUpdate("INSERT INTO users (name) VALUES ('"+ message +"');");
-	             			rs = statement.executeQuery("SELECT id, score FROM users WHERE name = '" +message+ "';");		
+	             			statement.executeUpdate("INSERT INTO users (name, pass) VALUES ('"+ message +"','" + ps +"');");
+	             			 
+	             			rs = statement.executeQuery("SELECT id, score FROM users WHERE name = '" +message+ "' and pass = '" + ps + "';");		
 	             			while (rs.next()) {
 	        				    
 	             				nid = rs.getString(1) + "";
@@ -106,7 +120,7 @@ public class App implements Runnable
 	         				   
 	         				 }
 	             			}else{
-	             				rs = statement.executeQuery("SELECT score FROM users WHERE name = '" +message+ "';");		
+	             				rs = statement.executeQuery("SELECT score FROM users WHERE name = '" +message+ "' and pass = '" + ps + "';");		
 		             			while (rs.next()) {
 		        				    
 		             				
@@ -114,6 +128,8 @@ public class App implements Runnable
 		         				   
 		         				 }
 	             			}
+	             			statement.close();
+	             			connection.close();
 	             		} catch (SQLException e) {
 	             			
 	             			// TODO Auto-generated catch block
@@ -122,19 +138,95 @@ public class App implements Runnable
 	                	 System.out.println(score);
 	                	 pw.println(score);
 	                	 pw.flush();
-	                 }else{
+	                 }else if(message.equals("^-^)")){
+	                	 try {
+							connection = DriverManager.getConnection(URL, US, PASS);
+							statement = connection.createStatement();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							nc = sc.nextLine();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							pc = sc.nextLine();
+							statement.executeUpdate("CREATE TABLE " + nc +" (id INT NOT NULL AUTO_INCREMENT,type VARCHAR(45) NOT NULL,value VARCHAR(300) NOT NULL,score INT(11) NULL DEFAULT 0,pass VARCHAR(45) NULL,answer VARCHAR(45) NULL,  PRIMARY KEY (id, type, value),UNIQUE INDEX `idnew_table_UNIQUE` (id ASC));");
+							statement.executeUpdate("INSERT INTO " + nc + " (type, value) VALUES ('pass','" + pc +"');");
+							statement.close();
+	             			connection.close();
+	                	 } catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+             			 
+	                 }else if(message.equals("stroomp%^)")){
+	                	 try {
+	                	 connection = DriverManager.getConnection(URL, US, PASS);
+							statement = connection.createStatement();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							tname = sc.nextLine();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							text = sc.nextLine();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							ans = sc.nextLine();
+							statement.executeUpdate("INSERT INTO " + nc + " (type, value, pass, answer) VALUES ('quest','" + text +"','"+tname+"','"+ans+"');");
+							statement.close();
+	             			connection.close();
+	                	 }catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                 }else if(message.equals("cont%!@$@")){
+	                	 try{
+	                	 connection = DriverManager.getConnection(URL, US, PASS);
+							statement = connection.createStatement();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							n1 = sc.nextLine();
+							while(!sc.hasNextLine()){
+		                		 
+		                	 }
+							p1 = sc.nextLine();
+							rs = statement.executeQuery("SELECT value FROM " +n1 +" WHERE id = 1;");
+							String t = "";
+							while (rs.next()) {
+	             				t = rs.getString(1) + "";
+	         				 }
+//							if(t.equals(p1)){
+//								pw.println("godd");
+//								pw.flush();
+//							}else{
+//								pw.println("Nono");
+//								pw.flush();
+//							}
+							statement.close();
+	             			connection.close();
+	                	 }catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+	                 }
+	                 else{
 	                	 String id = "";
 	                	 try {
 		             			  connection = DriverManager.getConnection(URL, US, PASS);
 		             			 statement = connection.createStatement();
-		             			rs = statement.executeQuery("SELECT id FROM tasks WHERE nick = '" +message+ "';");		
+		             			rs = statement.executeQuery("SELECT id FROM " +n1 +" WHERE pass = '" +message+ "';");		
 		             			while (rs.next()) {
 		        				    
 		             				id = rs.getString(1);
 		         				   
 		         				 }
 		             					
-		             					  
+		             			statement.close();
+		             			connection.close();		  
 		             		} catch (SQLException e) {
 		             			// TODO Auto-generated catch block
 		             			e.printStackTrace();
@@ -147,7 +239,7 @@ public class App implements Runnable
 	                		 try {
 			             			  connection = DriverManager.getConnection(URL, US, PASS);
 			             			 statement = connection.createStatement();
-			             			rs = statement.executeQuery("SELECT text, answer FROM tasks WHERE id = '" +id+ "';");	
+			             			rs = statement.executeQuery("SELECT value, answer FROM " +n1 +" WHERE id = '" +id+ "';");	
 			             			String text = "";
 			             			String ans = "";
 			             			while (rs.next()) {
@@ -187,7 +279,8 @@ public class App implements Runnable
 			  		                		 System.out.println("Bad");
 			  		                	} 
 			  		                	 answer = "";
-					             			 
+			  		                	statement.close();
+				             			connection.close();
 			             		} catch (SQLException e) {
 			             			// TODO Auto-generated catch block
 			             			e.printStackTrace();
@@ -199,11 +292,19 @@ public class App implements Runnable
 	                pw.close();
 	                cin.close();
 	                cout.close();
-	                clientSocket.close();
+	                getClientSocket().close();
 	        }
         }
         catch (IOException e) {
            System.out.println(e);
         }
      }
+
+	public Socket getClientSocket() {
+		return clientSocket;
+	}
+
+	public void setClientSocket(Socket clientSocket) {
+		App.clientSocket = clientSocket;
+	}
 }
