@@ -27,9 +27,9 @@ public class App implements Runnable
     private static Socket clientSocket;
     private static ResultSet rs;
     private static String message;
-    private static final String URL = "jdbc:mysql://localhost:3306/qrcontestdb";
-	private static final String US = "root";
-	private static final String PASS = "root";
+    private static final String URL = "jdbc:mysql://uf63wl4z2daq9dbb.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/e614ufgw4yiuop1u";
+	private static final String US = "y9cws2ckx7af597g";
+	private static final String PASS = "oitf8ekaqb130os5";
     private static String answer;
     private static Connection connection;
     private static Statement statement;
@@ -38,6 +38,7 @@ public class App implements Runnable
     App(Socket clientSocket){
     	this.clientSocket = clientSocket;
     }
+    
     public static void main(String[] args)  throws IOException {
     	try {
 			Driver driver = new FabricMySQLDriver();
@@ -88,6 +89,15 @@ public class App implements Runnable
 	                	 try {
 	             			  connection = DriverManager.getConnection(URL, US, PASS);
 	             			 statement = connection.createStatement();
+	             			rs = statement.executeQuery("SELECT id FROM users WHERE name = '" +message+ "';");		
+	             			while (rs.next()) {
+	        				    
+	             				nid = rs.getString(1) + "";
+	             				
+	         				   
+	         				 }
+	             			if(nid.equals("")){
+	             			statement.executeUpdate("INSERT INTO users (name) VALUES ('"+ message +"');");
 	             			rs = statement.executeQuery("SELECT id, score FROM users WHERE name = '" +message+ "';");		
 	             			while (rs.next()) {
 	        				    
@@ -95,14 +105,14 @@ public class App implements Runnable
 	             				score = rs.getString(2) + "";
 	         				   
 	         				 }
-	             			if(nid.equals("")){
-	             			statement.executeUpdate("INSERT INTO users (name) VALUES ('"+ message +"');");
-	             			rs = statement.executeQuery("SELECT id FROM users WHERE name = '" +message+ "';");		
-	             			while (rs.next()) {
-	        				    
-	             				nid = rs.getString(1) + "";
-	         				   score = "";
-	         				 }
+	             			}else{
+	             				rs = statement.executeQuery("SELECT score FROM users WHERE name = '" +message+ "';");		
+		             			while (rs.next()) {
+		        				    
+		             				
+		             				score = rs.getString(1) + "";
+		         				   
+		         				 }
 	             			}
 	             		} catch (SQLException e) {
 	             			
