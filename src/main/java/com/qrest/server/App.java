@@ -50,14 +50,14 @@ public class App implements Runnable
 		}
 		  
         try {
-            serverSocket = new ServerSocket(4444);  //Server socket
+            serverSocket = new ServerSocket(5656);  //Server socket
             while (true) {
                 Socket sock = serverSocket.accept();
                 System.out.println("Connected");
                 new Thread(new App(sock)).start();
              }
         } catch (IOException e) {
-            System.out.println("Could not listen on port: 4444");
+            System.out.println("Could not listen on port: 5656");
         }
  
         
@@ -65,7 +65,7 @@ public class App implements Runnable
     }
     public void run() {
         try {
-        	System.out.println("Server started. Listening to the port 4444");
+        	System.out.println("Server started. Listening to the port 5656");
 	        
             message = "";
 	        while (true) {
