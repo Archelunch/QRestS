@@ -150,7 +150,7 @@ public class App implements Runnable
 		                		 
 		                	 }
 							pc = sc.nextLine();
-							statement.executeUpdate("CREATE TABLE " + nc +" (id INT NOT NULL AUTO_INCREMENT,type VARCHAR(45) NOT NULL,value VARCHAR(300) NOT NULL,score INT(11) NULL DEFAULT 0,pass VARCHAR(45) NULL,answer VARCHAR(45) NULL,  PRIMARY KEY (id, type, value),UNIQUE INDEX `idnew_table_UNIQUE` (id ASC));");
+							statement.executeUpdate("CREATE TABLE " + nc +" (id INT NOT NULL AUTO_INCREMENT,type VARCHAR(45) NOT NULL,value VARCHAR(150) NOT NULL,score INT(11) NULL DEFAULT 0,pass VARCHAR(45) NULL,answer VARCHAR(45) NULL,  PRIMARY KEY (id, type, value),UNIQUE INDEX `idnew_table_UNIQUE` (id ASC));");
 							statement.executeUpdate("INSERT INTO " + nc + " (type, value) VALUES ('pass','" + pc +"');");
 							statement.close();
 	             			connection.close();
